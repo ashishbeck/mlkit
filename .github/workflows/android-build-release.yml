@@ -22,7 +22,7 @@ jobs:
       uses: gradle/actions/setup-gradle@v3
 
     - name: Build Debug APK
-      run: (cd android/vision-quickstart;./gradlew assembleDebug)
+      run: (cd android/vision-quickstart;chmod +x ./gradlew;./gradlew assembleDebug)
 
     - name: Upload APK to Release
       uses: softprops/action-gh-release@v2
