@@ -1,4 +1,4 @@
-name: Build & Upload Debug APK to Release
+name: Build & Upload Debug/Release APKs to Release
 
 on:
   release:
@@ -21,13 +21,17 @@ jobs:
     - name: Set up Gradle
       uses: gradle/actions/setup-gradle@v3
 
-    - name: Build Debug APK
-      run: (cd android/vision-quickstart;chmod +x ./gradlew;./gradlew assembleDebug)
+    - name: Build Debug and Release APKs
+      run: |
+        cd android/vision-quickstart
+        ./gradlew assembleDebug
+        ./gradlew assembleRelease
 
     - name: Upload APK to Release
       uses: softprops/action-gh-release@v2
       with:
         files: |
-          android/vision-quickstart/app/build/outputs/apk/debug/app-debug.apk
+          android/vision-quickstart/app/build/outputs/apk/debug/vision-quickstart-debug.apk
+          android/vision-quickstart/app/build/outputs/apk/release/vision-quickstart-release-unsigned.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
